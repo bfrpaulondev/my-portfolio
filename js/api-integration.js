@@ -36,7 +36,12 @@
     makeApiRequest(window.API_ENDPOINTS.profile, function(data) {
       console.log("Profile data loaded:", data);
       
-      // Update profile information in the DOM
+      if (data.images && data.images.length > 0) {
+        $(".avatar-image-large").attr("src", data.images[0]);
+        $(".hero-image").attr("src", data.images[1]);
+        $(".about-image").attr("src", data.images[2]);
+        $(".about-thumb .avatar-image").attr("src", data.images[3]);
+      }
       if (data.name) {
         $(".hero-title").text(`Hello there! I'm ${data.name}`);
         $(".navbar-brand").text(data.name);
@@ -174,7 +179,7 @@
         data.forEach(function(tech) {
           const techHtml = `
             <div class="col-lg-2 col-4 clients-item-height">
-              <img src="${tech.logo}" class="clients-image img-fluid" alt="${tech.name}" title="${tech.name}">
+              <img src="img/technologies/${tech.logo}" class="clients-image img-fluid" alt="${tech.name}" title="${tech.name}">
             </div>
           `;
           technologiesContainer.append(techHtml);
